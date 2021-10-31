@@ -1,4 +1,4 @@
-package com.example.database;
+package com.example.db_crud;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    EditText name, contact, dob, email;
+    EditText name, contact, address,email;
     Button insert, update, delete, view;
     DBHelper DB;
 
@@ -20,9 +20,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         name = findViewById(R.id.name);
         contact = findViewById(R.id.contact);
-        dob = findViewById(R.id.dob);
+        address = findViewById(R.id.address);
         email = findViewById(R.id.email);
-
         insert = findViewById(R.id.btnInsert);
         update = findViewById(R.id.btnUpdate);
         delete = findViewById(R.id.btnDelete);
@@ -33,10 +32,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String nameTXT = name.getText().toString();
                 String contactTXT = contact.getText().toString();
-                String dobTXT = dob.getText().toString();
+                String addressTXT = address.getText().toString();
                 String emailTXT = email.getText().toString();
 
-                Boolean checkinsertdata = DB.insertuserdata(nameTXT, contactTXT, dobTXT, emailTXT);
+                Boolean checkinsertdata = DB.insertuserdata(nameTXT, contactTXT, addressTXT,emailTXT);
                 if(checkinsertdata==true)
                     Toast.makeText(MainActivity.this, "New Entry Inserted", Toast.LENGTH_SHORT).show();
                 else
@@ -47,10 +46,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String nameTXT = name.getText().toString();
                 String contactTXT = contact.getText().toString();
-                String dobTXT = dob.getText().toString();
+                String addressTXT = address.getText().toString();
                 String emailTXT = email.getText().toString();
 
-                Boolean checkupdatedata = DB.updateuserdata(nameTXT, contactTXT, dobTXT, emailTXT);
+                Boolean checkupdatedata = DB.updateuserdata(nameTXT, contactTXT, addressTXT,emailTXT);
                 if(checkupdatedata==true)
                     Toast.makeText(MainActivity.this, "Entry Updated", Toast.LENGTH_SHORT).show();
                 else
@@ -79,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
                 while(res.moveToNext()){
                     buffer.append("Name :"+res.getString(0)+"\n");
                     buffer.append("Contact :"+res.getString(1)+"\n");
-                    buffer.append("Address :"+res.getString(2)+"\n");
-                    buffer.append("Email :"+res.getString(3)+"\n\n");
+                    buffer.append("Address :"+res.getString(2)+"\n\n");
+                    buffer.append("E-mail :"+res.getString(2)+"\n\n");
                 }
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -88,5 +87,6 @@ public class MainActivity extends AppCompatActivity {
                 builder.setTitle("User Entries");
                 builder.setMessage(buffer.toString());
                 builder.show();
+                
             }        });
     }}
